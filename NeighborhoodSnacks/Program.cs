@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using NeighborhoodSnacks.Context;
+using NeighborhoodSnacks.Repositories;
+using NeighborhoodSnacks.Repositories.Interfaces;
 
 namespace NeighborhoodSnacks
 {
@@ -14,6 +16,9 @@ namespace NeighborhoodSnacks
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddTransient<ISnackRepository, SnackRepository>();
+            builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
             
             var app = builder.Build();
 
